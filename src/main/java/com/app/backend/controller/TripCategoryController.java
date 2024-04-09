@@ -1,7 +1,8 @@
 package com.app.backend.controller;
 
+import com.app.backend.DTOs.TripCategoryDTO;
 import com.app.backend.entities.*;
-import com.app.backend.repositories.*;
+import com.app.backend.services.TripCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +16,31 @@ import java.util.Optional;
 @Slf4j
 public class TripCategoryController {
 
-    private final TripCategoryRepository tripCategoryRepository;
+    private final TripCategoryService tripCategoryService;
 
 
     @GetMapping(path = "/trips_categories")
     public List<TripCategory> getAllTripsCategories() {
-        log.info(tripCategoryRepository.findAll().toString());
-        return tripCategoryRepository.findAll();
+        log.info(tripCategoryService.getAll().toString());
+        return tripCategoryService.getAll();
     }
     @GetMapping("/trips_categories/{id}")
     public Optional<TripCategory> tripCategoryById(@PathVariable(value = "id") Integer id) {
-        Optional<TripCategory> tripCategory = tripCategoryRepository.findById(id);
+        Optional<TripCategory> tripCategory = tripCategoryService.getById(id);
         return tripCategory;
     }
 
+    @PostMapping("/trips_categories/{id}/update")
+    public void tripCategoryEdit(@PathVariable(value = "id") Integer id,
+                         @RequestBody TripCategoryDTO tripCategoryDTO) {
+        log.info(tripCategoryDTO.getCategoryName());
+        tripCategoryService.update(id, tripCategoryDTO);
+    }
+
+    @DeleteMapping("/trips_categories/{id}/delete")
+    public void tripCategoryDelete(@PathVariable(value = "id") Integer id) {
+        log.info(id.toString());
+        tripCategoryService.delete(id);
+    }
 }
 

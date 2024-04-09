@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface CurrencyRepository extends JpaRepository<Currency, Integer> {
     Optional<Currency> findByName(String name);
+
+    Integer deleteByName(String name);
 }
