@@ -5,10 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user")
 public class User {
     @Id
     @Column(name = "login")
@@ -20,4 +23,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @OneToMany(mappedBy="user")
+    private Set<Category> categories;
+
+    @OneToMany(mappedBy="user")
+    private Set<Trip> trips;
+
+    @OneToMany(mappedBy="user")
+    private Set<Transaction> transactions;
 }

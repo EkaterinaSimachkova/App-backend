@@ -6,6 +6,8 @@ import com.app.backend.entities.*;
 import com.app.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +23,18 @@ public class UserController {
 
 
     @GetMapping(path = "/users")
-    public List<User> getAllUsers() {
-        log.info(userService.getAll().toString());
-        return userService.getAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAll();
+        log.info(users.toString());
+        return ResponseEntity.ok(users);
     }
+
     @GetMapping("/users/{login}")
-    public Optional<User> userByLogin(@PathVariable(value = "login") String login) {
+    public ResponseEntity<User> userByLogin(@PathVariable(value = "login") String login) {
         Optional<User> user = userService.getByLogin(login);
-        return user;
+        return user
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/users/{login}/update")

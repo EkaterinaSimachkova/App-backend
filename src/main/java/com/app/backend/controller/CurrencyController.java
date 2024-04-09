@@ -5,6 +5,8 @@ import com.app.backend.entities.*;
 import com.app.backend.services.CurrencyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +22,17 @@ public class CurrencyController {
 
 
     @GetMapping(path = "/currencies")
-    public List<Currency> getAllCurrencies() {
-        log.info(currencyService.getAll().toString());
-        return currencyService.getAll();
+    public ResponseEntity<List<Currency>> getAllCurrencies() {
+        List<Currency> currencies = currencyService.getAll();
+        log.info(currencies.toString());
+        return ResponseEntity.ok(currencies);
     }
     @GetMapping("/currencies/{name}")
-    public Optional<Currency> currencyByName(@PathVariable(value = "name") String name) {
+    public ResponseEntity<Currency> currencyByName(@PathVariable(value = "name") String name) {
         Optional<Currency> currency = currencyService.getByName(name);
-        return currency;
+        return currency
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/currencies/{name}/update")

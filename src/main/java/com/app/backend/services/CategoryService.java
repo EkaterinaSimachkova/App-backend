@@ -4,6 +4,8 @@ import com.app.backend.DTOs.CategoryDTO;
 import com.app.backend.entities.Category;
 import com.app.backend.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public List<Category> getAll() {
-        var categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         return categories;
     }
 
@@ -27,7 +29,7 @@ public class CategoryService {
     public void update(String name, CategoryDTO categoryDTO) {
         Category category = categoryRepository.findByName(name).orElseThrow();
         category.setDescription(categoryDTO.getDescription());
-        category.setUserLogin(categoryDTO.getUserLogin());
+        //category.setUser();
         categoryRepository.save(category);
     }
 
@@ -35,12 +37,12 @@ public class CategoryService {
         categoryRepository.deleteByName(name);
     }
 
-    public void create(String name, CategoryDTO categoryDTO) {
+    /*public void create(String name, CategoryDTO categoryDTO) {
         Category category = new Category(
                 name,
                 categoryDTO.getDescription(),
                 categoryDTO.getUserLogin()
         );
         categoryRepository.save(category);
-    }
+    }*/
 }

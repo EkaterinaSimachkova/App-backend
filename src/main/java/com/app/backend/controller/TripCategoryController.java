@@ -5,6 +5,8 @@ import com.app.backend.entities.*;
 import com.app.backend.services.TripCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +22,18 @@ public class TripCategoryController {
 
 
     @GetMapping(path = "/trips_categories")
-    public List<TripCategory> getAllTripsCategories() {
-        log.info(tripCategoryService.getAll().toString());
-        return tripCategoryService.getAll();
+    public ResponseEntity<List<TripCategory>> getAllTripsCategories() {
+        List<TripCategory> tripsCategories = tripCategoryService.getAll();
+        log.info(tripsCategories.toString());
+        return ResponseEntity.ok(tripsCategories);
     }
+
     @GetMapping("/trips_categories/{id}")
-    public Optional<TripCategory> tripCategoryById(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<TripCategory> tripCategoryById(@PathVariable(value = "id") Integer id) {
         Optional<TripCategory> tripCategory = tripCategoryService.getById(id);
-        return tripCategory;
+        return tripCategory
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/trips_categories/{id}/update")

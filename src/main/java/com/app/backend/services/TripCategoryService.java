@@ -15,18 +15,20 @@ public class TripCategoryService {
     private final TripCategoryRepository tripCategoryRepository;
 
     public List<TripCategory> getAll() {
-        return tripCategoryRepository.findAll();
+        List<TripCategory> tripsCategories = tripCategoryRepository.findAll();
+        return tripsCategories;
     }
 
     public Optional<TripCategory> getById(Integer id) {
-        return tripCategoryRepository.findById(id);
+        Optional<TripCategory> tripCategory = tripCategoryRepository.findById(id);
+        return tripCategory;
     }
 
     public void update(Integer id, TripCategoryDTO tripCategoryDTO) {
         TripCategory tripCategory = tripCategoryRepository.findById(id).orElseThrow();
         tripCategory.setLimit(tripCategoryDTO.getLimit());
-        tripCategory.setTripId(tripCategoryDTO.getTripId());
-        tripCategory.setCategoryName(tripCategoryDTO.getCategoryName());
+        //tripCategory.setTrip();
+        //tripCategory.setCategory();
         tripCategoryRepository.save(tripCategory);
     }
 
@@ -34,7 +36,7 @@ public class TripCategoryService {
         tripCategoryRepository.deleteById(id);
     }
 
-    public void create(Integer id, TripCategoryDTO tripCategoryDTO) {
+    /*public void create(Integer id, TripCategoryDTO tripCategoryDTO) {
         TripCategory tripCategory = new TripCategory(
                 id,
                 tripCategoryDTO.getLimit(),
@@ -42,5 +44,5 @@ public class TripCategoryService {
                 tripCategoryDTO.getCategoryName()
         );
         tripCategoryRepository.save(tripCategory);
-    }
+    }*/
 }

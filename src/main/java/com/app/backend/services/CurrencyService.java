@@ -15,7 +15,7 @@ public class CurrencyService {
     private final CurrencyRepository currencyRepository;
 
     public List<Currency> getAll() {
-        var currencies = currencyRepository.findAll();
+        List<Currency> currencies = currencyRepository.findAll();
         return currencies;
     }
 
@@ -35,12 +35,12 @@ public class CurrencyService {
         currencyRepository.deleteByName(name);
     }
 
-    public void create(String name, CurrencyDTO currencyDTO) {
+    /*public void create(String name, CurrencyDTO currencyDTO) {
         Currency currency = new Currency(
                 name,
                 currencyDTO.getFullName(),
                 currencyDTO.getSymbol()
         );
         currencyRepository.save(currency);
-    }
+    }*/
 }

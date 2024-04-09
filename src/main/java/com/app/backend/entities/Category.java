@@ -5,10 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "category")
 public class Category {
 
     @Id
@@ -18,7 +21,13 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "userLogin")
-    private String userLogin;
+    /*@Column(name = "user_login")
+    private String userLogin;*/
 
+    @ManyToOne
+    @JoinColumn(name="user_login")
+    private User user;
+
+    @OneToMany(mappedBy="category")
+    private Set<TripCategory> tripsCategories;
 }

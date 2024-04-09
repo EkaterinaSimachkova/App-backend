@@ -5,6 +5,8 @@ import com.app.backend.entities.*;
 import com.app.backend.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +23,18 @@ public class CategoryController {
 
 
     @GetMapping(path = "/categories")
-    public List<Category> getAllCategories() {
-        log.info(categoryService.getAll().toString());
-        return categoryService.getAll();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        List<Category> categories = categoryService.getAll();
+        log.info(categories.toString());
+        return ResponseEntity.ok(categories);
     }
+
     @GetMapping("/categories/{name}")
-    public Optional<Category> categoryByName(@PathVariable(value = "name") String name) {
+    public ResponseEntity<Category> categoryByName(@PathVariable(value = "name") String name) {
         Optional<Category> category = categoryService.getByName(name);
-        return category;
+        return category
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/categories/{name}/update")

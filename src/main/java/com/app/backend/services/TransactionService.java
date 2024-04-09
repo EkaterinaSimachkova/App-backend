@@ -15,7 +15,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
     public List<Transaction> getAll() {
-        var transactions = transactionRepository.findAll();
+        List<Transaction> transactions = transactionRepository.findAll();
         return transactions;
     }
 
@@ -30,10 +30,10 @@ public class TransactionService {
         transaction.setCost(transactionDTO.getCost());
         transaction.setDate(transactionDTO.getDate());
         transaction.setDescription(transactionDTO.getDescription());
-        transaction.setUserLogin(transactionDTO.getUserLogin());
-        transaction.setTripId(transactionDTO.getTripId());
-        transaction.setCategoryName(transactionDTO.getCategoryName());
-        transaction.setCurrencyName(transactionDTO.getCurrencyName());
+        //transaction.setUser();
+        //transaction.setTrip();
+        //transaction.setCategory();
+        //transaction.setCurrency();
         transactionRepository.save(transaction);
     }
 
@@ -41,7 +41,7 @@ public class TransactionService {
         transactionRepository.deleteById(id);
     }
 
-    public void create(Integer id, TransactionDTO transactionDTO) {
+    /*public void create(Integer id, TransactionDTO transactionDTO) {
         Transaction transaction = new Transaction(
                 id,
                 transactionDTO.getName(),
@@ -54,5 +54,5 @@ public class TransactionService {
                 transactionDTO.getCurrencyName()
         );
         transactionRepository.save(transaction);
-    }
+    }*/
 }

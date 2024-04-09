@@ -1,11 +1,9 @@
 package com.app.backend.services;
 
 import com.app.backend.DTOs.UserDTO;
-import com.app.backend.entities.Category;
 import com.app.backend.entities.User;
 import com.app.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +15,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public List<User> getAll() {
-        var users = userRepository.findAll();
+        List<User> users = userRepository.findAll();
         return users;
     }
 
@@ -37,12 +35,12 @@ public class UserService {
         userRepository.deleteByLogin(login);
     }
 
-    public void create(String login, UserDTO userDTO) {
+    /*public void create(String login, UserDTO userDTO) {
         User user = new User(
                 login,
                 userDTO.getName(),
                 userDTO.getPassword()
         );
         userRepository.save(user);
-    }
+    }*/
 }

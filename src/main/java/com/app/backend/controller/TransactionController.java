@@ -5,6 +5,8 @@ import com.app.backend.entities.*;
 import com.app.backend.services.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +22,17 @@ public class TransactionController {
 
 
     @GetMapping(path = "/transactions")
-    public List<Transaction> getAllTransactions() {
-        log.info(transactionService.getAll().toString());
-        return transactionService.getAll();
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        List<Transaction> transactions = transactionService.getAll();
+        log.info(transactions.toString());
+        return ResponseEntity.ok(transactions);
     }
     @GetMapping("/transactions/{id}")
-    public Optional<Transaction> transactionById(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<Transaction> transactionById(@PathVariable(value = "id") Integer id) {
         Optional<Transaction> transaction = transactionService.getById(id);
-        return transaction;
+        return transaction
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/transactions/{id}/update")

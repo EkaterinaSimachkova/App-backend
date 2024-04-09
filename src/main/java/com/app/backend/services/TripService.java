@@ -15,7 +15,7 @@ public class TripService {
     private final TripRepository tripRepository;
 
     public List<Trip> getAll() {
-        var trips = tripRepository.findAll();
+        List<Trip> trips = tripRepository.findAll();
         return trips;
     }
 
@@ -32,8 +32,8 @@ public class TripService {
         trip.setEndDate(tripDTO.getEndDate());
         trip.setDayLimit(tripDTO.getDayLimit());
         trip.setDescription(tripDTO.getDescription());
-        trip.setCurrencyName(tripDTO.getCurrencyName());
-        trip.setUserLogin(tripDTO.getUserLogin());
+        //trip.setCurrency();
+        //trip.setUser();
         tripRepository.save(trip);
     }
 
@@ -41,7 +41,7 @@ public class TripService {
         tripRepository.deleteById(id);
     }
 
-    public void create(Integer id, TripDTO tripDTO) {
+    /*public void create(Integer id, TripDTO tripDTO) {
         Trip trip = new Trip(
                 id,
                 tripDTO.getName(),
@@ -54,5 +54,5 @@ public class TripService {
                 tripDTO.getUserLogin()
         );
         tripRepository.save(trip);
-    }
+    }*/
 }
