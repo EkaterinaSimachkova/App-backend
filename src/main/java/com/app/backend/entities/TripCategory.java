@@ -14,7 +14,6 @@ public class TripCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "limit")

@@ -16,7 +16,6 @@ public class Currency {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
@@ -28,9 +27,9 @@ public class Currency {
     @Column(name = "symbol")
     private String symbol;
 
-    @OneToMany(mappedBy="currency")
+    /*@OneToMany(mappedBy="currency")
     private Set<Transaction> transactions;
 
     @OneToMany(mappedBy="currency")
-    private Set<Trip> trips;
+    private Set<Trip> trips;*/
 }

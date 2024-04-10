@@ -68,12 +68,16 @@ public class TripService {
     }
 
     private User getUser(Integer id) {
-        User user = userRepository.getReferenceById(id);
-        return user;
+        if (id != null) {
+            User user = userRepository.getReferenceById(id);
+            return user;
+        } else return null;
     }
 
     private Currency getCurrency(Integer id) {
-        Currency currency = currencyRepository.getReferenceById(id);
-        return currency;
+        if (id != null) {
+            Currency currency = currencyRepository.getReferenceById(id);
+            return currency;
+        } else return null;
     }
 }

@@ -17,7 +17,6 @@ public class Trip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
@@ -46,10 +45,10 @@ public class Trip {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy="trip")
-    private Set<TripCategory> tripsCategories;
+    /*@OneToMany(mappedBy="trip")
+    private Set<TripCategory> tripCategories;
 
     @OneToMany(mappedBy="trip")
-    private Set<Transaction> transactions;
+    private Set<Transaction> transactions;*/
 
 }

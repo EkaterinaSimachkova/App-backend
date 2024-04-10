@@ -52,7 +52,9 @@ public class CategoryService {
     }
 
     private User getUser(Integer id) {
-        User user = userRepository.getReferenceById(id);
-        return user;
+        if (id != null) {
+            User user = userRepository.getReferenceById(id);
+            return user;
+        } else return null;
     }
 }

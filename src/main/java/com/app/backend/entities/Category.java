@@ -16,7 +16,6 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
@@ -29,6 +28,6 @@ public class Category {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy="category")
-    private Set<TripCategory> tripsCategories;
+    /*@OneToMany(mappedBy="category")
+    private Set<TripCategory> tripsCategories;*/
 }

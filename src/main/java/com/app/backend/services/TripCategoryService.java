@@ -4,6 +4,7 @@ import com.app.backend.DTOs.TripCategoryDTO;
 import com.app.backend.entities.Category;
 import com.app.backend.entities.Trip;
 import com.app.backend.entities.TripCategory;
+import com.app.backend.entities.User;
 import com.app.backend.repositories.CategoryRepository;
 import com.app.backend.repositories.TripCategoryRepository;
 import com.app.backend.repositories.TripRepository;
@@ -58,12 +59,16 @@ public class TripCategoryService {
     }
 
     private Trip getTrip(Integer id) {
-        Trip trip =  tripRepository.getReferenceById(id);
-        return trip;
+        if (id != null) {
+            Trip trip =  tripRepository.getReferenceById(id);
+            return trip;
+        } else return null;
     }
 
     private Category getCategory(Integer id) {
-        Category category =  categoryRepository.getReferenceById(id);
-        return category;
+        if (id != null) {
+            Category category =  categoryRepository.getReferenceById(id);
+            return category;
+        } else return null;
     }
 }

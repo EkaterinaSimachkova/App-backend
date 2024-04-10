@@ -70,22 +70,31 @@ public class TransactionService {
     }
 
     private User getUser(Integer id) {
-        User user = userRepository.getReferenceById(id);
-        return user;
+        if (id != null) {
+            User user = userRepository.getReferenceById(id);
+            return user;
+        } else return null;
     }
 
     private Trip getTrip(Integer id) {
-        Trip trip =  tripRepository.getReferenceById(id);
-        return trip;
+        if (id != null) {
+            Trip trip =  tripRepository.getReferenceById(id);
+            return trip;
+        } else return null;
     }
 
     private Category getCategory(Integer id) {
-        Category category =  categoryRepository.getReferenceById(id);
-        return category;
+        if (id != null) {
+            Category category =  categoryRepository.getReferenceById(id);
+            return category;
+        } else return null;
     }
 
     private Currency getCurrency(Integer id) {
-        Currency currency = currencyRepository.getReferenceById(id);
-        return currency;
+        if (id != null) {
+            Currency currency = currencyRepository.getReferenceById(id);
+            return currency;
+        } else return null;
     }
+
 }

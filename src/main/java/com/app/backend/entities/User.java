@@ -15,7 +15,6 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
     @Column(name = "login")
@@ -27,12 +26,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy="user")
+    /*@OneToMany(mappedBy="user")
     private Set<Category> categories;
 
     @OneToMany(mappedBy="user")
     private Set<Trip> trips;
 
     @OneToMany(mappedBy="user")
-    private Set<Transaction> transactions;
+    private Set<Transaction> transactions;*/
 }
