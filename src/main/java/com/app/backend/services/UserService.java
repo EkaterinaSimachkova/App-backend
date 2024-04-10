@@ -19,28 +19,29 @@ public class UserService {
         return users;
     }
 
-    public Optional<User> getByLogin(String login) {
-        Optional<User> user = userRepository.findByLogin(login);
+    public Optional<User> getById(Integer id) {
+        Optional<User> user = userRepository.findById(id);
         return user;
     }
 
-    public void update(String login, UserDTO userDTO) {
-        User user = userRepository.findByLogin(login).orElseThrow();
+    public void update(Integer id, UserDTO userDTO) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setLogin(userDTO.getLogin());
         user.setName(userDTO.getName());
         user.setPassword(userDTO.getPassword());
         userRepository.save(user);
     }
 
-    public void delete(String login) {
-        userRepository.deleteByLogin(login);
+    public void delete(Integer id) {
+        userRepository.deleteById(id);
     }
 
-    /*public void create(String login, UserDTO userDTO) {
-        User user = new User(
-                login,
-                userDTO.getName(),
-                userDTO.getPassword()
-        );
+    public void create(UserDTO userDTO) {
+        User user = User.builder()
+                .login(userDTO.getLogin())
+                .name(userDTO.getName())
+                .password(userDTO.getPassword())
+                .build();
         userRepository.save(user);
-    }*/
+    }
 }

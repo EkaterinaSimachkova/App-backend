@@ -1,8 +1,12 @@
 package com.app.backend.services;
 
 import com.app.backend.DTOs.TripDTO;
+import com.app.backend.entities.Currency;
 import com.app.backend.entities.Trip;
+import com.app.backend.entities.User;
+import com.app.backend.repositories.CurrencyRepository;
 import com.app.backend.repositories.TripRepository;
+import com.app.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TripService {
     private final TripRepository tripRepository;
+    private final UserRepository userRepository;
+    private final CurrencyRepository currencyRepository;
 
     public List<Trip> getAll() {
         List<Trip> trips = tripRepository.findAll();
@@ -25,6 +31,9 @@ public class TripService {
     }
 
     public void update(Integer id, TripDTO tripDTO) {
+        Currency currency = getCurrency(tripDTO.getCurrencyId());
+        User user = getUser(tripDTO.getUserId());
+
         Trip trip = tripRepository.findById(id).orElseThrow();
         trip.setName(tripDTO.getName());
         trip.setBudget(tripDTO.getBudget());
@@ -32,8 +41,8 @@ public class TripService {
         trip.setEndDate(tripDTO.getEndDate());
         trip.setDayLimit(tripDTO.getDayLimit());
         trip.setDescription(tripDTO.getDescription());
-        //trip.setCurrency();
-        //trip.setUser();
+        trip.setCurrency(currency);
+        trip.setUser(user);
         tripRepository.save(trip);
     }
 
@@ -41,18 +50,30 @@ public class TripService {
         tripRepository.deleteById(id);
     }
 
-    /*public void create(Integer id, TripDTO tripDTO) {
-        Trip trip = new Trip(
-                id,
-                tripDTO.getName(),
-                tripDTO.getBudget(),
-                tripDTO.getStartDate(),
-                tripDTO.getEndDate(),
-                tripDTO.getDayLimit(),
-                tripDTO.getDescription(),
-                tripDTO.getCurrencyName(),
-                tripDTO.getUserLogin()
-        );
+    public void create(TripDTO tripDTO) {
+        Currency currency = getCurrency(tripDTO.getCurrencyId());
+        User user = getUser(tripDTO.getUserId());
+
+        Trip trip = Trip.builder()
+                .name(tripDTO.getName())
+                .budget(tripDTO.getBudget())
+                .startDate(tripDTO.getStartDate())
+                .endDate(tripDTO.getEndDate())
+                .dayLimit(tripDTO.getDayLimit())
+                .description(tripDTO.getDescription())
+                .currency(currency)
+                .user(user)
+                .build();
         tripRepository.save(trip);
-    }*/
+    }
+
+    private User getUser(Integer id) {
+        User user = userRepository.getReferenceById(id);
+        return user;
+    }
+
+    private Currency getCurrency(Integer id) {
+        Currency currency = currencyRepository.getReferenceById(id);
+        return currency;
+    }
 }

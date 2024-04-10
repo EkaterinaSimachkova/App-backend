@@ -1,13 +1,12 @@
 package com.app.backend.DTOs;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 
 @Data
 public class CategoryDTO {
-
+    private String name;
     private String description;
-    private String userLogin;
+    private Integer userId;
 
 }

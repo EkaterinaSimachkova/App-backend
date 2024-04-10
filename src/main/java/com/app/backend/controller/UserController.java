@@ -29,25 +29,34 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/users/{login}")
-    public ResponseEntity<User> userByLogin(@PathVariable(value = "login") String login) {
-        Optional<User> user = userService.getByLogin(login);
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> userById(@PathVariable(value = "login") Integer id) {
+        Optional<User> user = userService.getById(id);
         return user
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/users/{login}/update")
-    public void userEdit(@PathVariable(value = "login") String login,
+    @PostMapping("/users/{id}/update")
+    public ResponseEntity<Void> userEdit(@PathVariable(value = "id") Integer id,
                                  @RequestBody UserDTO userDTO) {
         log.info(userDTO.getName());
-        userService.update(login, userDTO);
+        userService.update(id, userDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{login}/delete")
-    public void userDelete(@PathVariable(value = "login") String login) {
-        log.info(login);
-        userService.delete(login);
+    @DeleteMapping("/users/{id}/delete")
+    public ResponseEntity<Void> userDelete(@PathVariable(value = "id") Integer id) {
+        log.info(id.toString());
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/users/create")
+    public ResponseEntity<Void> userCreate(@RequestBody UserDTO userDTO) {
+        log.info(userDTO.getLogin());
+        userService.create(userDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

@@ -1,8 +1,12 @@
 package com.app.backend.services;
 
 import com.app.backend.DTOs.TripCategoryDTO;
+import com.app.backend.entities.Category;
+import com.app.backend.entities.Trip;
 import com.app.backend.entities.TripCategory;
+import com.app.backend.repositories.CategoryRepository;
 import com.app.backend.repositories.TripCategoryRepository;
+import com.app.backend.repositories.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TripCategoryService {
     private final TripCategoryRepository tripCategoryRepository;
+    private final TripRepository tripRepository;
+    private final CategoryRepository categoryRepository;
 
     public List<TripCategory> getAll() {
         List<TripCategory> tripsCategories = tripCategoryRepository.findAll();
@@ -25,10 +31,13 @@ public class TripCategoryService {
     }
 
     public void update(Integer id, TripCategoryDTO tripCategoryDTO) {
+        Trip trip = getTrip(tripCategoryDTO.getTripId());
+        Category category = getCategory(tripCategoryDTO.getCategoryId());
+
         TripCategory tripCategory = tripCategoryRepository.findById(id).orElseThrow();
         tripCategory.setLimit(tripCategoryDTO.getLimit());
-        //tripCategory.setTrip();
-        //tripCategory.setCategory();
+        tripCategory.setTrip(trip);
+        tripCategory.setCategory(category);
         tripCategoryRepository.save(tripCategory);
     }
 
@@ -36,13 +45,25 @@ public class TripCategoryService {
         tripCategoryRepository.deleteById(id);
     }
 
-    /*public void create(Integer id, TripCategoryDTO tripCategoryDTO) {
-        TripCategory tripCategory = new TripCategory(
-                id,
-                tripCategoryDTO.getLimit(),
-                tripCategoryDTO.getTripId(),
-                tripCategoryDTO.getCategoryName()
-        );
+    public void create(TripCategoryDTO tripCategoryDTO) {
+        Trip trip = getTrip(tripCategoryDTO.getTripId());
+        Category category = getCategory(tripCategoryDTO.getCategoryId());
+
+        TripCategory tripCategory = TripCategory.builder()
+                .limit(tripCategoryDTO.getLimit())
+                .trip(trip)
+                .category(category)
+                .build();
         tripCategoryRepository.save(tripCategory);
-    }*/
+    }
+
+    private Trip getTrip(Integer id) {
+        Trip trip =  tripRepository.getReferenceById(id);
+        return trip;
+    }
+
+    private Category getCategory(Integer id) {
+        Category category =  categoryRepository.getReferenceById(id);
+        return category;
+    }
 }

@@ -36,16 +36,25 @@ public class TransactionController {
     }
 
     @PostMapping("/transactions/{id}/update")
-    public void transactionEdit(@PathVariable(value = "id") Integer id,
+    public ResponseEntity<Void> transactionEdit(@PathVariable(value = "id") Integer id,
                          @RequestBody TransactionDTO transactionDTO) {
         log.info(transactionDTO.getName());
         transactionService.update(id, transactionDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/transactions/{id}/delete")
-    public void transactionDelete(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<Void> transactionDelete(@PathVariable(value = "id") Integer id) {
         log.info(id.toString());
         transactionService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/transactions/create")
+    public ResponseEntity<Void> transactionCreate(@RequestBody TransactionDTO transactionDTO) {
+        log.info(transactionDTO.getName());
+        transactionService.create(transactionDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

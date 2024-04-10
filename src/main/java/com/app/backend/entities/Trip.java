@@ -1,23 +1,23 @@
 package com.app.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "trip")
 public class Trip {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
@@ -38,18 +38,12 @@ public class Trip {
     @Column(name = "description")
     private String description;
 
-    /*@Column(name = "currency_name")
-    private String currencyName;*/
-
     @ManyToOne
-    @JoinColumn(name="currency_name")
+    @JoinColumn(name="currency_id")
     private Currency currency;
 
-    /*@Column(name = "user_login")
-    private String userLogin;*/
-
     @ManyToOne
-    @JoinColumn(name="user_login")
+    @JoinColumn(name="user_id")
     private User user;
 
     @OneToMany(mappedBy="trip")

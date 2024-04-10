@@ -35,18 +35,25 @@ public class TripController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/trips/{id}/update")
-    public void tripEdit(@PathVariable(value = "id") Integer id,
+    public ResponseEntity<Void> tripEdit(@PathVariable(value = "id") Integer id,
                             @RequestBody TripDTO tripDTO) {
         log.info(tripDTO.getName());
         tripService.update(id, tripDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/trips/{id}/delete")
-    public void tripDelete(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<Void> tripDelete(@PathVariable(value = "id") Integer id) {
         log.info(id.toString());
         tripService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @PostMapping("/trips/create")
+    public ResponseEntity<Void> tripCreate(@RequestBody TripDTO tripDTO) {
+        log.info(tripDTO.getName());
+        tripService.create(tripDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 

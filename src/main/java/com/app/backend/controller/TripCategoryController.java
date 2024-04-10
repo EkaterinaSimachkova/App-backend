@@ -37,16 +37,25 @@ public class TripCategoryController {
     }
 
     @PostMapping("/trips_categories/{id}/update")
-    public void tripCategoryEdit(@PathVariable(value = "id") Integer id,
+    public ResponseEntity<Void> tripCategoryEdit(@PathVariable(value = "id") Integer id,
                          @RequestBody TripCategoryDTO tripCategoryDTO) {
-        log.info(tripCategoryDTO.getCategoryName());
+        log.info(tripCategoryDTO.getCategoryId().toString());
         tripCategoryService.update(id, tripCategoryDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/trips_categories/{id}/delete")
-    public void tripCategoryDelete(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<Void> tripCategoryDelete(@PathVariable(value = "id") Integer id) {
         log.info(id.toString());
         tripCategoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/trips_categories/create")
+    public ResponseEntity<Void> tripCategoryCreate(@RequestBody TripCategoryDTO tripCategoryDTO) {
+        log.info(tripCategoryDTO.getCategoryId().toString());
+        tripCategoryService.create(tripCategoryDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

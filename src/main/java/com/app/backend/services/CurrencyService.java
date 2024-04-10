@@ -19,28 +19,29 @@ public class CurrencyService {
         return currencies;
     }
 
-    public Optional<Currency> getByName(String name) {
-        Optional<Currency> currency = currencyRepository.findByName(name);
+    public Optional<Currency> getById(Integer id) {
+        Optional<Currency> currency = currencyRepository.findById(id);
         return currency;
     }
 
-    public void update(String name, CurrencyDTO currencyDTO) {
-        Currency currency = currencyRepository.findByName(name).orElseThrow();
+    public void update(Integer id, CurrencyDTO currencyDTO) {
+        Currency currency = currencyRepository.findById(id).orElseThrow();
+        currency.setName(currency.getName());
         currency.setFullName(currencyDTO.getFullName());
         currency.setSymbol(currencyDTO.getSymbol());
         currencyRepository.save(currency);
     }
 
-    public void delete(String name) {
-        currencyRepository.deleteByName(name);
+    public void delete(Integer id) {
+        currencyRepository.deleteById(id);
     }
 
-    /*public void create(String name, CurrencyDTO currencyDTO) {
-        Currency currency = new Currency(
-                name,
-                currencyDTO.getFullName(),
-                currencyDTO.getSymbol()
-        );
+    public void create(CurrencyDTO currencyDTO) {
+        Currency currency = Currency.builder()
+                .name(currencyDTO.getName())
+                .fullName(currencyDTO.getFullName())
+                .symbol(currencyDTO.getSymbol())
+                .build();
         currencyRepository.save(currency);
-    }*/
+    }
 }

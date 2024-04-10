@@ -13,7 +13,7 @@ public class TripDTO {
     private Date endDate;
     private Integer dayLimit;
     private String description;
-    private String currencyName;
-    private String userLogin;
+    private Integer currencyId;
+    private Integer userId;
 
 }

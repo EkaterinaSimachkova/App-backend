@@ -27,25 +27,34 @@ public class CurrencyController {
         log.info(currencies.toString());
         return ResponseEntity.ok(currencies);
     }
-    @GetMapping("/currencies/{name}")
-    public ResponseEntity<Currency> currencyByName(@PathVariable(value = "name") String name) {
-        Optional<Currency> currency = currencyService.getByName(name);
+    @GetMapping("/currencies/{id}")
+    public ResponseEntity<Currency> currencyById(@PathVariable(value = "id") Integer id) {
+        Optional<Currency> currency = currencyService.getById(id);
         return currency
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/currencies/{name}/update")
-    public void currencyEdit(@PathVariable(value = "name") String name,
+    @PostMapping("/currencies/{id}/update")
+    public ResponseEntity<Void> currencyEdit(@PathVariable(value = "id") Integer id,
                              @RequestBody CurrencyDTO currencyDTO) {
         log.info(currencyDTO.getFullName());
-        currencyService.update(name, currencyDTO);
+        currencyService.update(id, currencyDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/currencies/{name}/delete")
-    public void currencyDelete(@PathVariable(value = "name") String name) {
-        log.info(name);
-        currencyService.delete(name);
+    @DeleteMapping("/currencies/{id}/delete")
+    public ResponseEntity<Void> currencyDelete(@PathVariable(value = "id") Integer id) {
+        log.info(id.toString());
+        currencyService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/currencies/create")
+    public ResponseEntity<Void> currencyCreate(@RequestBody CurrencyDTO currencyDTO) {
+        log.info(currencyDTO.getFullName());
+        currencyService.create(currencyDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

@@ -29,25 +29,27 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-    @GetMapping("/categories/{name}")
-    public ResponseEntity<Category> categoryByName(@PathVariable(value = "name") String name) {
-        Optional<Category> category = categoryService.getByName(name);
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<Category> categoryById(@PathVariable(value = "id") Integer id) {
+        Optional<Category> category = categoryService.getById(id);
         return category
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/categories/{name}/update")
-    public void categoryEdit(@PathVariable(value = "name") String name,
+    @PostMapping("/categories/{id}/update")
+    public ResponseEntity<Void> categoryEdit(@PathVariable(value = "id") Integer id,
                                  @RequestBody CategoryDTO categoryDTO) {
         log.info(categoryDTO.getDescription());
-        categoryService.update(name, categoryDTO);
+        categoryService.update(id, categoryDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/categories/{name}/delete")
-    public void categoryDelete(@PathVariable(value = "name") String name) {
-        log.info(name);
-        categoryService.delete(name);
+    @DeleteMapping("/categories/{id}/delete")
+    public ResponseEntity<Void> categoryDelete(@PathVariable(value = "id") Integer id) {
+        log.info(id.toString());
+        categoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

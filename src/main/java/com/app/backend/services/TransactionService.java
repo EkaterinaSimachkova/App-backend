@@ -1,8 +1,8 @@
 package com.app.backend.services;
 
 import com.app.backend.DTOs.TransactionDTO;
-import com.app.backend.entities.Transaction;
-import com.app.backend.repositories.TransactionRepository;
+import com.app.backend.entities.*;
+import com.app.backend.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TransactionService {
     private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
+    private final TripRepository tripRepository;
+    private final CategoryRepository categoryRepository;
+    private final CurrencyRepository currencyRepository;
 
     public List<Transaction> getAll() {
         List<Transaction> transactions = transactionRepository.findAll();
@@ -25,15 +29,20 @@ public class TransactionService {
     }
 
     public void update(Integer id, TransactionDTO transactionDTO) {
+        User user = getUser(transactionDTO.getUserId());
+        Trip trip = getTrip(transactionDTO.getTripId());
+        Category category = getCategory(transactionDTO.getCategoryId());
+        Currency currency = getCurrency(transactionDTO.getCurrencyId());
+
         Transaction transaction = transactionRepository.findById(id).orElseThrow();
         transaction.setName(transactionDTO.getName());
         transaction.setCost(transactionDTO.getCost());
         transaction.setDate(transactionDTO.getDate());
         transaction.setDescription(transactionDTO.getDescription());
-        //transaction.setUser();
-        //transaction.setTrip();
-        //transaction.setCategory();
-        //transaction.setCurrency();
+        transaction.setUser(user);
+        transaction.setTrip(trip);
+        transaction.setCategory(category);
+        transaction.setCurrency(currency);
         transactionRepository.save(transaction);
     }
 
@@ -41,18 +50,42 @@ public class TransactionService {
         transactionRepository.deleteById(id);
     }
 
-    /*public void create(Integer id, TransactionDTO transactionDTO) {
-        Transaction transaction = new Transaction(
-                id,
-                transactionDTO.getName(),
-                transactionDTO.getCost(),
-                transactionDTO.getDate(),
-                transactionDTO.getDescription(),
-                transactionDTO.getUserLogin(),
-                transactionDTO.getTripId(),
-                transactionDTO.getCategoryName(),
-                transactionDTO.getCurrencyName()
-        );
+    public void create(TransactionDTO transactionDTO) {
+        User user = getUser(transactionDTO.getUserId());
+        Trip trip = getTrip(transactionDTO.getTripId());
+        Category category = getCategory(transactionDTO.getCategoryId());
+        Currency currency = getCurrency(transactionDTO.getCurrencyId());
+
+        Transaction transaction = Transaction.builder()
+                .name(transactionDTO.getName())
+                .cost(transactionDTO.getCost())
+                .date(transactionDTO.getDate())
+                .description(transactionDTO.getDescription())
+                .user(user)
+                .trip(trip)
+                .category(category)
+                .currency(currency)
+                .build();
         transactionRepository.save(transaction);
-    }*/
+    }
+
+    private User getUser(Integer id) {
+        User user = userRepository.getReferenceById(id);
+        return user;
+    }
+
+    private Trip getTrip(Integer id) {
+        Trip trip =  tripRepository.getReferenceById(id);
+        return trip;
+    }
+
+    private Category getCategory(Integer id) {
+        Category category =  categoryRepository.getReferenceById(id);
+        return category;
+    }
+
+    private Currency getCurrency(Integer id) {
+        Currency currency = currencyRepository.getReferenceById(id);
+        return currency;
+    }
 }

@@ -10,6 +10,6 @@ public class TripCategoryDTO {
 
     private Integer tripId;
 
-    private String categoryName;
+    private Integer categoryId;
 
 }

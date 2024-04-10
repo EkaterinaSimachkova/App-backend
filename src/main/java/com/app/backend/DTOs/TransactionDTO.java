@@ -11,8 +11,8 @@ public class TransactionDTO {
     private Integer cost;
     private Date date;
     private String description;
-    private String userLogin;
+    private Integer userId;
     private Integer tripId;
-    private String categoryName;
-    private String currencyName;
+    private Integer categoryId;
+    private Integer currencyId;
 }

@@ -1,37 +1,31 @@
 package com.app.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "trip_category")
 public class TripCategory {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "limit")
     private Integer limit;
 
-    /*@Column(name = "trip_id")
-    private Integer tripId;*/
-
     @ManyToOne
     @JoinColumn(name="trip_id")
     private Trip trip;
 
-    /*@Column(name = "category_name")
-    private String categoryName;*/
-
     @ManyToOne
-    @JoinColumn(name="category_name")
+    @JoinColumn(name="category_id")
     private Category category;
 
 }
