@@ -27,6 +27,7 @@ public class TransactionController {
         log.info(transactions.toString());
         return ResponseEntity.ok(transactions);
     }
+
     @GetMapping("/transactions/{id}")
     public ResponseEntity<Transaction> transactionById(@PathVariable(value = "id") Integer id) {
         Optional<Transaction> transaction = transactionService.getById(id);
@@ -56,5 +57,6 @@ public class TransactionController {
         transactionService.create(transactionDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 

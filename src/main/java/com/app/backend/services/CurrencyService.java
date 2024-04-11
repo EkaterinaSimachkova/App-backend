@@ -44,4 +44,5 @@ public class CurrencyService {
                 .build();
         currencyRepository.save(currency);
     }
+
 }

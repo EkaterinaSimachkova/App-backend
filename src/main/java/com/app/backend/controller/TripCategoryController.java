@@ -57,5 +57,6 @@ public class TripCategoryController {
         tripCategoryService.create(tripCategoryDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 

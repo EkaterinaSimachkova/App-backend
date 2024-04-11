@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class TripDTO {
-
     private String name;
     private Integer budget;
     private Date startDate;

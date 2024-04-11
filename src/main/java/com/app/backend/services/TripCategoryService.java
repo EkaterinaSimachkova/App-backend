@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -59,16 +60,15 @@ public class TripCategoryService {
     }
 
     private Trip getTrip(Integer id) {
-        if (id != null) {
-            Trip trip =  tripRepository.getReferenceById(id);
-            return trip;
-        } else return null;
+        return Objects.nonNull(id)
+                ? tripRepository.getReferenceById(id)
+                : null;
     }
 
     private Category getCategory(Integer id) {
-        if (id != null) {
-            Category category =  categoryRepository.getReferenceById(id);
-            return category;
-        } else return null;
+        return Objects.nonNull(id)
+                ? categoryRepository.getReferenceById(id)
+                : null;
     }
+
 }

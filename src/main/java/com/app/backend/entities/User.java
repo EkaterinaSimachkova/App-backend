@@ -13,8 +13,9 @@ import java.util.Set;
 @Builder
 @Table(name = "user")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "login")
@@ -34,4 +35,5 @@ public class User {
 
     @OneToMany(mappedBy="user")
     private Set<Transaction> transactions;*/
+
 }

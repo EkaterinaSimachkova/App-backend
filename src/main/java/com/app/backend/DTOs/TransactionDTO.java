@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class TransactionDTO {
-
     private String name;
     private Integer cost;
     private Date date;
@@ -15,4 +14,5 @@ public class TransactionDTO {
     private Integer tripId;
     private Integer categoryId;
     private Integer currencyId;
+
 }

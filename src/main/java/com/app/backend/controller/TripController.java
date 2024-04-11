@@ -27,6 +27,7 @@ public class TripController {
         log.info(trips.toString());
         return ResponseEntity.ok(trips);
     }
+
     @GetMapping("/trips/{id}")
     public ResponseEntity<Trip> tripById(@PathVariable(value = "id") Integer id) {
         Optional<Trip> trip = tripService.getById(id);
@@ -34,6 +35,7 @@ public class TripController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
     @PostMapping("/trips/{id}/update")
     public ResponseEntity<Void> tripEdit(@PathVariable(value = "id") Integer id,
                             @RequestBody TripDTO tripDTO) {
@@ -55,5 +57,6 @@ public class TripController {
         tripService.create(tripDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 

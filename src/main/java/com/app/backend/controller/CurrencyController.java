@@ -27,6 +27,7 @@ public class CurrencyController {
         log.info(currencies.toString());
         return ResponseEntity.ok(currencies);
     }
+
     @GetMapping("/currencies/{id}")
     public ResponseEntity<Currency> currencyById(@PathVariable(value = "id") Integer id) {
         Optional<Currency> currency = currencyService.getById(id);
@@ -56,5 +57,6 @@ public class CurrencyController {
         currencyService.create(currencyDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 

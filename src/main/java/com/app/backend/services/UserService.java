@@ -4,15 +4,17 @@ import com.app.backend.DTOs.UserDTO;
 import com.app.backend.entities.User;
 import com.app.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
@@ -25,10 +27,12 @@ public class UserService {
     }
 
     public void update(Integer id, UserDTO userDTO) {
+        var password = passwordEncoder.encode(userDTO.getPassword());
+
         User user = userRepository.findById(id).orElseThrow();
         user.setLogin(userDTO.getLogin());
         user.setName(userDTO.getName());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(password);
         userRepository.save(user);
     }
 
@@ -37,11 +41,14 @@ public class UserService {
     }
 
     public void create(UserDTO userDTO) {
+        var password = passwordEncoder.encode(userDTO.getPassword());
+
         User user = User.builder()
                 .login(userDTO.getLogin())
                 .name(userDTO.getName())
-                .password(userDTO.getPassword())
+                .password(password)
                 .build();
         userRepository.save(user);
     }
+
 }

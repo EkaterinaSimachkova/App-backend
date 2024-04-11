@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -70,31 +71,27 @@ public class TransactionService {
     }
 
     private User getUser(Integer id) {
-        if (id != null) {
-            User user = userRepository.getReferenceById(id);
-            return user;
-        } else return null;
+        return Objects.nonNull(id)
+                ? userRepository.getReferenceById(id)
+                : null;
     }
 
     private Trip getTrip(Integer id) {
-        if (id != null) {
-            Trip trip =  tripRepository.getReferenceById(id);
-            return trip;
-        } else return null;
+        return Objects.nonNull(id)
+                ? tripRepository.getReferenceById(id)
+                : null;
     }
 
     private Category getCategory(Integer id) {
-        if (id != null) {
-            Category category =  categoryRepository.getReferenceById(id);
-            return category;
-        } else return null;
+        return Objects.nonNull(id)
+                ? categoryRepository.getReferenceById(id)
+                : null;
     }
 
     private Currency getCurrency(Integer id) {
-        if (id != null) {
-            Currency currency = currencyRepository.getReferenceById(id);
-            return currency;
-        } else return null;
+        return Objects.nonNull(id)
+                ? currencyRepository.getReferenceById(id)
+                : null;
     }
 
 }

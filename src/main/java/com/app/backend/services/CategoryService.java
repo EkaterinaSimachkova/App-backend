@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+
     public List<Category> getAll() {
         List<Category> categories = categoryRepository.findAll();
         return categories;
@@ -52,9 +54,9 @@ public class CategoryService {
     }
 
     private User getUser(Integer id) {
-        if (id != null) {
-            User user = userRepository.getReferenceById(id);
-            return user;
-        } else return null;
+        return Objects.nonNull(id)
+                ? userRepository.getReferenceById(id)
+                : null;
     }
+
 }

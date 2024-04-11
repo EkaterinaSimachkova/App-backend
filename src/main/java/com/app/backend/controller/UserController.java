@@ -1,6 +1,5 @@
 package com.app.backend.controller;
 
-import com.app.backend.DTOs.TripCategoryDTO;
 import com.app.backend.DTOs.UserDTO;
 import com.app.backend.entities.*;
 import com.app.backend.services.UserService;
@@ -58,5 +57,6 @@ public class UserController {
         userService.create(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 
