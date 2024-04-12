@@ -28,7 +28,7 @@ public class CategoryService {
         return category;
     }
 
-    public void update(Integer id, CategoryDTO categoryDTO) {
+    public Category update(Integer id, CategoryDTO categoryDTO) {
         User user = getUser(categoryDTO.getUserId());
 
         Category category = categoryRepository.findById(id).orElseThrow();
@@ -36,13 +36,14 @@ public class CategoryService {
         category.setDescription(categoryDTO.getDescription());
         category.setUser(user);
         categoryRepository.save(category);
+        return category;
     }
 
     public void delete(Integer id) {
         categoryRepository.deleteById(id);
     }
 
-    public void create(CategoryDTO categoryDTO) {
+    public Category create(CategoryDTO categoryDTO) {
         User user = getUser(categoryDTO.getUserId());
 
         Category category = Category.builder()
@@ -51,6 +52,7 @@ public class CategoryService {
                 .user(user)
                 .build();
         categoryRepository.save(category);
+        return category;
     }
 
     private User getUser(Integer id) {
